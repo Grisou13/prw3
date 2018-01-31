@@ -1,0 +1,1 @@
+https://www.efv.admin.ch/efv/fr/home/finanzberichterstattung/daten/datencenter.spa.EIS.app/eisui/data/recette_depenses.csv
