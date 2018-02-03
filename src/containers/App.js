@@ -1,21 +1,36 @@
-import React, { Component } from 'react';
-import logo from '../assets/logo.svg';
-import './App.sass';
+import React from 'react'
+import PropTypes from "prop-types";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
-    );
-  }
+import {connect} from 'react-redux'
+
+import Error from "./Error";
+
+const mapStateToProps = (state) => {
+    return {
+    }
+}
+const mapDispatchToProps = (dispatch) => {
+    return {
+        // toggle: () => dispatch(toggleDisplayMode())
+    }
 }
 
-export default App;
+@connect(mapStateToProps, mapDispatchToProps)
+class App extends React.Component{
+    render(){
+      console.log("Rendering app")
+        return (
+            <div id="outer-container" style={{height:"100vh", width: "100vw"}}>
+                <header><Error /></header>
+
+                <main>
+                    <p>{"APP HERE EH"}</p>
+                </main>
+            </div>
+        )
+    }
+}
+App.propTypes = {
+}
+
+export default App
