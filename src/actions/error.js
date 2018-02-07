@@ -1,0 +1,1 @@
+export const reportError = (errType,paylod, severity = 0) => ({type: errType, payload, severity, error: true })

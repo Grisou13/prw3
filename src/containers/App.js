@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import {connect} from 'react-redux'
 
 import Error from "./Error";
+import TaxForm from "./TaxForm"
+
 import SwissMap from '../assets/switzerland.svg'
 import './App.sass'
 
@@ -28,7 +30,7 @@ class App extends React.Component{
 
                 <main>
                     <p>{"APP HERE EH"}</p>
-                    <img src={SwissMap} alt=""/>
+                    <TaxForm />
                 </main>
             </div>
         )

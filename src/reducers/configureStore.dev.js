@@ -6,11 +6,13 @@ import DevTools from './../containers/DevTools';
 import promiseMiddleware from 'redux-promise';
 
 import errors from './error'
+import taxForm from './taxForm'
 import errorMiddleware from './middlewares/error'
 
 const reducers = combineReducers({
     ui,
-    errors
+    errors,
+    taxForm
 })
 const createEnhancers = () => compose(
       // Middleware you want to use in development:
