@@ -3,7 +3,7 @@ import {RESET_ERROR_MESSAGE} from '../../consts/error'
 var prev = null;
 const ErrorMiddleware = store => next => action => {
     let res = next(action)
-    if(action.error !== null){
+    if(action.hasOwnProperty("error")){
         if(prev != null)
           clearTimeout(prev);
         prev = setTimeout(()=>{

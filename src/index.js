@@ -19,7 +19,7 @@ const render = () =>{
       <Provider store={store}>
         <div>
           <App />
-          {process.env.NODE_ENV !== 'production' ? null: <DevTools />}
+          {process.env.NODE_ENV === 'production' ? null: <DevTools />}
         </div>
       </Provider>
     ), document.getElementById('root'));
