@@ -7,16 +7,20 @@ import promiseMiddleware from 'redux-promise';
 
 import errors from './error'
 import taxForm from './taxForm'
-import errorMiddleware from './middlewares/error'
+import taxCalculation from './taxCalculation'
+import taxSpending from './taxSpending'
+import middlewares from './middlewares'
 
 const reducers = combineReducers({
     ui,
     errors,
-    taxForm
+    form: taxForm,
+    calculation: taxCalculation,
+    spendings: taxSpending
 })
 const createEnhancers = () => compose(
       // Middleware you want to use in development:
-      applyMiddleware(thunk, errorMiddleware ),
+      middlewares,
       DevTools.instrument(),
 );
 

@@ -19,3 +19,7 @@ https://www.estv.admin.ch/dam/estv/fr/dokumente/bundessteuer/tarife/58c-2012-Pos
 
 Deducation import fédéral
 https://www.estv.admin.ch/dam/estv/fr/dokumente/bundessteuer/tarife/Abzuege2017.pdf.download.pdf/Abzuege2017f.pdf
+
+# visualisation
+
+https://github.com/okfn/bubbletree/

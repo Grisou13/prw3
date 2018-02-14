@@ -4,15 +4,14 @@ import { reducer as ui } from 'redux-ui'
 import DevTools from './../containers/DevTools';
 
 import errors from './error'
-import errorMiddleware from './middlewares/error'
+import middlewares from './middlewares'
 
 const reducers = combineReducers({
     ui,
     errors
 })
 const createEnhancers = () => compose(
-      // Middleware you want to use in development:
-      applyMiddleware(thunk, errorMiddleware ),
+      middlewares,
   );
 
 export default (initialState) => {
