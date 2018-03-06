@@ -1,6 +1,6 @@
-
 import React from 'react'
 import {connect} from 'react-redux'
+
 const formatError = (error) => {
     if(error.TIMEOUT)
       return "Unable to get gps signal." + error.message
@@ -12,11 +12,12 @@ const formatError = (error) => {
     return msg
 
 }
+
 @connect((state)=>({error:state.errors}))
-class Error extends React.Component {
+export default class Error extends React.Component {
   render(){
     const {error} = this.props;
-    console.log(error)
+    console.error(error)
     if(error)
       return (
           <div className="error">
@@ -27,5 +28,3 @@ class Error extends React.Component {
       return null
   }
 }
-
-export default Error

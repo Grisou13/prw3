@@ -7,6 +7,7 @@ export default class Graph extends React.Component {
     render(){
         return (
             <div>
+                GRAPHS here
             </div>
         );
     }

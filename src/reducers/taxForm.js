@@ -1,10 +1,10 @@
 import {UPDATE_TAX_FORM, RESET_TAX_FORM} from '../consts/taxForm'
 
 const intitialState = {
-    fortune: null,
-    income: null,
-    deductions: null,
-    nb_children: null
+    fortune: "",
+    income: "",
+    deductions: "",
+    nb_children: ""
 }
 export default (state = intitialState, action) => {
     const { type, payload } = action
