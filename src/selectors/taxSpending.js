@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect'
 import { percentPerSection } from './taxCalculation';
+import { formSelector } from './form'
 // https://github.com/reactjs/reselect
 
 const taxSpendingSelector = state => state.spending
 const taxSectionSelector = key => state => state.spending[key]
-const formSelector = state => state.form
+
 const calculationSelector = state => state.calculation
 
 
@@ -42,6 +43,7 @@ const getValueInRange = (obj, search) => {
 const taxCalculationMapping = {
   fortune: {
     formKey:"fortune",
+    if: () => true,
     // cb is how the data should be added to the total of taxes
     // data is the data from the form
     // calc is calculation data for the form key
@@ -49,15 +51,23 @@ const taxCalculationMapping = {
   },
   income: {
     formKey:"income",
+    if: () => true,
     cb: (data, calc) => data*getValueInRange(calc, data)
   },
   nb_children:{
     formKey:"nb_children",
+    if: () => true,
     cb: (data, calc) => calc[data]
   },
-  federalTax:{
+  federalTaxMarried:{
     formKey: "income",
-    cb: (data, calc) => data * getValueInRange(calc, data)
+    if: (form) => form.married == true,
+    cb: (data, calc) => getValueInRange(calc, data)
+  },
+  federalTaxSingleAsF:{
+    formKey: "income",
+    if: (form) => form.married == false,
+    cb: (data, calc) => getValueInRange(calc, data)
   }
 }
 
@@ -70,20 +80,23 @@ export const calculateTaxes = createSelector(
 
     let total = Object.keys(calculus).reduce((total, k)=> {
       let formData;
+      if(!taxCalculationMapping[k].if(form)) //we can't process this element because the form isn't complete
+        return total
+
       if(typeof taxCalculationMapping[k].formKey === "array")
         formData = Object.keys(form).reduce((t,k2)=> t += taxCalculationMapping[k].formKey.indexof(k2) ? ( parseFloat(form[k2]) ? parseFloat(form[k2]) : 0 ) : 0,0)
       else{
-        if(!form[taxCalculationMapping[k].formKey].length)
+        if(!form[taxCalculationMapping[k].formKey].length) //no data in form
           return total
         formData = parseFloat(form[taxCalculationMapping[k].formKey])
       }
         
       return total += taxCalculationMapping[k].cb(formData, calculus[k])
     }, 0)
-    console.log("TOTAL: ",total)
     return total;
   }
 )
+
 // spendings per section of budget
 export const spendingsPerSection = createSelector(
   calculateTaxes,

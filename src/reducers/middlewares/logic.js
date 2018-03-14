@@ -9,6 +9,9 @@ import {APP_BOOT, APP_READY} from '../../consts/app'
 import {fetchTaxCalculations, fetchTaxSpendings} from '../../actions/taxData'
 import {appReady as appReadyAction} from '../../actions/app'
 import {isEmpty} from 'lodash'
+import { UPDATE_TAX_FORM } from '../../consts/taxForm';
+import { formSelector } from '../../selectors/form'
+import { taxFormInvalid } from './../../actions/taxForm'
 const fetchTaxSpendingsLogic = createLogic({
   // declarative behavior
   type: TAX_SPENDING_FETCH,  // filter for actions of this type
@@ -27,7 +30,7 @@ const fetchTaxSpendingsLogic = createLogic({
   process({ getState, action }) {
     return {
       education:{
-        total: 10000, // normally tax data should include all the sub categories of spending for a given district, but for now since we don't have a way of autmating that, we just get the total which will give us a final computed value for total of the total, which is dumb
+        total: 20000, // normally tax data should include all the sub categories of spending for a given district, but for now since we don't have a way of autmating that, we just get the total which will give us a final computed value for total of the total, which is dumb
     },
     envirronement:{
         total:10000, //same here
@@ -90,9 +93,13 @@ const fetchTaxCalculationsLogic = createLogic({
         2:-1400,
         3:-2100
     },
-    federalTax:{
+    federalTaxSingleAsF:{
         0:0,
         40000: 0.014, 
+    },
+    federalTaxMarried:{
+      0:0,
+      40000: 0.4, 
     },
     }
     //return axios.get(`http://46.101.134.181/api/me?token=root`)
@@ -125,10 +132,36 @@ const appReady = createLogic({
   process({getState, action}, dispatch, done){
     let state = getState();
     if(!isEmpty(state.calculation) && !isEmpty(state.spendings)){
-      console.log("TON PERE")
       
       dispatch(appReadyAction())
       done()
+    }
+  }
+})
+
+const validateFields = (fields) => {
+  const errors = []
+  if(!fields.fortune.length) errors.push("Fortune field is required")
+  if(!fields.income.length) errors.push("Income field is required")
+  if(fields.fortune == "") errors.push("Fortune field mustn't be empty")
+  if(fields.income == "") errors.push("Income field mustn't be empty")
+  return errors
+}
+
+const validateFormUpdate = createLogic({
+  type: UPDATE_TAX_FORM,
+  validate({getState, action}, allow, reject){
+    const state = getState();
+    const fields = {
+      ...formSelector(state),
+      [action.payload.name]: action.payload.value
+    };
+    const errors = validateFields(fields)
+    if(!errors.length){
+      allow(action)
+    }
+    else{
+      reject(taxFormInvalid(errors, action.payload))
     }
   }
 })
@@ -137,5 +170,6 @@ export default [
   fetchTaxCalculationsLogic,
   fetchTaxSpendingsLogic,
   appReady,
-  appBoot
+  appBoot,
+  validateFormUpdate
 ]

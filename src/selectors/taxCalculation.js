@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect'
+import { formSelector } from './form'
 // https://github.com/reactjs/reselect
 
-const formSelector = state => state.form
+
 const spendingSelector = state => state.spendings
 
 const taxSpendingSelector = state => state.spendings
@@ -26,7 +27,6 @@ export const totalForSection = sectionKey => createSelector(
   taxSectionSelector(sectionKey),
   (section) => ({ total: sum(section) })
 )
-console.log(totalSelector)
 //spendings for all the section
 export const spendingsSelector = createSelector(
   taxSpendingSelector,
@@ -48,10 +48,8 @@ export const percentPerSection = createSelector(
   totalSelector,
   (spendings, total) => {
 
-    console.log(total)
     let ret = {}
-    Object.keys(spendings).forEach( k => ret[k] = (spendings[k] / total ) * 100 )
-    console.log(ret)
+    Object.keys(spendings).forEach( k => ret[k] = (spendings[k] / total ) )
     return ret
   }
 )

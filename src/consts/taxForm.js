@@ -1,2 +1,3 @@
 export const UPDATE_TAX_FORM = "UPDATE_TAX_FORM"
 export const RESET_TAX_FORM = "RESET_TAX_FORM"
+export const INVALID_TAX_FORM = "INVALID_TAX_FORM"

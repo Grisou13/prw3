@@ -2,11 +2,15 @@
 ```
 {
     form: { //taken from input form, this is submitted to the store only when 3 out of the 5 inputs are filled up
-        fortune:int,
-        deductions:int,
-        income:int,
-        civil_status:string,
-        nb_children: int
+        fields: {
+            fortune: "",
+            income: "",
+            deductions: "",
+            nb_children: "",
+            married: false
+        },
+        errors: [],
+        valid: true
     },
     calculation:{ //fetched from server
         fortune:{
@@ -25,11 +29,13 @@
             2:-1400,
             3:-2100
         },
-        federalTax:{
-            0:0,
-            40000: 0.014 (1.4%),
-            .....
+        federalTaxMarried:{
+            40000: 100 //amount in chf the person pays for the scale he is in
         },
+        federalTaxSignle:{
+            40000: 100 //amount in chf the person pays for the scale he is in
+        }
+        
     },
     spending:{ //fetched from server
         education:{
