@@ -26,5 +26,6 @@ const render = () =>{
       </Provider>
     ), document.getElementById('root'));
 }
+
 render();
 registerServiceWorker();

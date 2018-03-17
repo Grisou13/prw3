@@ -1,0 +1,47 @@
+.fadein-enter
+  opacity: 0.01
+  width: 0px
+  display: flex
+  visibility: visible
+
+
+.fadein-enter.fadein-enter-active
+  opacity: 1
+  width: 100px
+  transition: 700ms
+
+
+.fadein-leave
+  opacity: 1
+  width: 100px
+
+
+.fadein-leave.fadein-leave-active
+  opacity: 0.01
+  width: 0px
+  transition: 700ms
+
+$bubbleHeight: 30px
+.step-counter
+  border-radius: 50%
+  background-color: #19B5FE
+  width: $bubbleHeight
+  height: $bubbleHeight
+  line-height: $bubbleHeight
+  display: table-cell
+  text-align: center
+  padding: 2px
+  &--active
+    background-color: #26A65B
+.step
+  // width: 100px
+  // height: 100px
+  // background-color: red
+  // float: left
+  // border: solid 2px white
+  display: none
+  visibility: hidden
+  box-sizing: border-box
+  &--active
+    display: flex
+    visibility: visible

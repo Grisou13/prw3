@@ -1,6 +1,7 @@
 {
-  "presets": ["es2015","stage-1","env", "react"],
+  "presets": ["es2015","stage-1","env", "stage-0", "react"],
   "plugins": [
+    "syntax-class-properties",
     ["transform-decorators-legacy"],
     ["transform-object-rest-spread"],
     ["transform-strict-mode", {

@@ -4,6 +4,7 @@ import axios from 'axios'
 
 import {TAX_SPENDING_FETCH,TAX_SPENDING_FETCH_CANCEL,TAX_SPENDING_FETCH_SUCCESS,TAX_SPENDING_FETCH_FAILED} from '../../consts/taxSpending'
 import {TAX_CALCULATION_FETCH,TAX_CALCULATION_FETCH_CANCEL,TAX_CALCULATION_FETCH_SUCCESS, TAX_CALCULATION_FETCH_FAILED} from '../../consts/taxCalculation'
+import {FORM_COMPLETED} from '../../consts/taxForm'
 import {APP_BOOT, APP_READY} from '../../consts/app'
 
 import {fetchTaxCalculations, fetchTaxSpendings} from '../../actions/taxData'
@@ -34,25 +35,25 @@ const fetchTaxSpendingsLogic = createLogic({
     },
     envirronement:{
         total:10000, //same here
-        
+
     },
     health:{
         total: 10000
     },
     sports: {
         total:10000,
-        
+
     },
     humanRessources:{
         total:10000
     },
     court:{
         total: 10000,
-        
+
     },
     secretariat:{
         total:10000,
-        
+
     }
     }
     //return axios.get(`http://46.101.134.181/api/me?token=root`)
@@ -80,12 +81,12 @@ const fetchTaxCalculationsLogic = createLogic({
       fortune:{
         0:0,
         40000: 0.014, //fortuneMinima : tax percent taken
-        
+
     },
     income:{
         0:0,
         40000: 0.014,
-        
+
     },
     nb_children:{
         0:0,
@@ -95,11 +96,11 @@ const fetchTaxCalculationsLogic = createLogic({
     },
     federalTaxSingleAsF:{
         0:0,
-        40000: 0.014, 
+        40000: 0.014,
     },
     federalTaxMarried:{
       0:0,
-      40000: 0.4, 
+      40000: 0.4,
     },
     }
     //return axios.get(`http://46.101.134.181/api/me?token=root`)
@@ -116,13 +117,13 @@ const appBoot = createLogic({
   },
 
   process({getState, action}, dispatch, done){
-    dispatch(fetchTaxCalculations())
+    //TODO define actions to dispatch and fetch on app start
     dispatch(fetchTaxSpendings())
     done()
   }
 })
 const appReady = createLogic({
-  type: [TAX_CALCULATION_FETCH_SUCCESS, TAX_SPENDING_FETCH_SUCCESS],
+  type: APP_BOOT,
   processOptions: { // options influencing the process hook, default {}
     dispatchReturn: false, // dispatch from the resolved/rejected promise
     successType: null,  // use this action type for success
@@ -131,8 +132,8 @@ const appReady = createLogic({
   warnTimeout : 2000,
   process({getState, action}, dispatch, done){
     let state = getState();
-    if(!isEmpty(state.calculation) && !isEmpty(state.spendings)){
-      
+    if(true){ //TODO define custom logic for app ready
+
       dispatch(appReadyAction())
       done()
     }
@@ -141,10 +142,10 @@ const appReady = createLogic({
 
 const validateFields = (fields) => {
   const errors = []
-  if(!fields.fortune.length) errors.push("Fortune field is required")
-  if(!fields.income.length) errors.push("Income field is required")
-  if(fields.fortune == "") errors.push("Fortune field mustn't be empty")
-  if(fields.income == "") errors.push("Income field mustn't be empty")
+  if(!fields.fortune.length) errors.push({field:"fortune", message: "Fortune field is required"})
+  if(!fields.income.length) errors.push({field:"income", message: "Income field is required"})
+  if(fields.fortune == "") errors.push({field:"fortune", message: "Fortune field can't be empty"})
+  if(fields.income == "") errors.push({field:"income",message:"Income field can't be empty"})
   return errors
 }
 
@@ -166,10 +167,23 @@ const validateFormUpdate = createLogic({
   }
 })
 
+const validateFormCompleted = createLogic({
+  type: FORM_COMPLETED,
+  validate({getState, action}, allow, reject){
+    const state = getState()
+
+    if(!state.form.errors.length)
+      allow()
+    else
+      reject()
+  }
+})
+
 export default [
   fetchTaxCalculationsLogic,
   fetchTaxSpendingsLogic,
   appReady,
   appBoot,
-  validateFormUpdate
+  validateFormUpdate,
+  validateFormCompleted
 ]
