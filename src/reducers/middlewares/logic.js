@@ -13,6 +13,8 @@ import {isEmpty} from 'lodash'
 import { UPDATE_TAX_FORM } from '../../consts/taxForm';
 import { formSelector } from '../../selectors/form'
 import { taxFormInvalid } from './../../actions/taxForm'
+
+import api from '../../utils/api'
 const fetchTaxSpendingsLogic = createLogic({
   // declarative behavior
   type: TAX_SPENDING_FETCH,  // filter for actions of this type
@@ -29,7 +31,7 @@ const fetchTaxSpendingsLogic = createLogic({
   // and automatically applying the actions to the raw values which
   // get mapped to the action payload
   process({ getState, action }) {
-    return {
+    return api.fetchSpendings() /*{
       education:{
         total: 20000, // normally tax data should include all the sub categories of spending for a given district, but for now since we don't have a way of autmating that, we just get the total which will give us a final computed value for total of the total, which is dumb
     },
@@ -55,7 +57,7 @@ const fetchTaxSpendingsLogic = createLogic({
         total:10000,
 
     }
-    }
+  }*/
     //return axios.get(`http://46.101.134.181/api/me?token=root`)
     //  .then(resp => resp.data);
   }
@@ -77,7 +79,7 @@ const fetchTaxCalculationsLogic = createLogic({
   // and automatically applying the actions to the raw values which
   // get mapped to the action payload
   process({ getState, action }) {
-    return {
+    return api.fetchCalculations() /*{
       fortune:{
         0:0,
         40000: 0.014, //fortuneMinima : tax percent taken
@@ -102,7 +104,7 @@ const fetchTaxCalculationsLogic = createLogic({
       0:0,
       40000: 0.4,
     },
-    }
+  }*/
     //return axios.get(`http://46.101.134.181/api/me?token=root`)
     //  .then(resp => resp.data);
   }
@@ -142,10 +144,12 @@ const appReady = createLogic({
 
 const validateFields = (fields) => {
   const errors = []
-  if(!fields.fortune.length) errors.push({field:"fortune", message: "Fortune field is required"})
-  if(!fields.income.length) errors.push({field:"income", message: "Income field is required"})
-  if(fields.fortune == "") errors.push({field:"fortune", message: "Fortune field can't be empty"})
-  if(fields.income == "") errors.push({field:"income",message:"Income field can't be empty"})
+  if(!fields.fortune.trim().length) errors.push({field:"fortune", message: "Fortune field is required"})
+  if(!fields.income.trim().length) errors.push({field:"income", message: "Income field is required"})
+  if(!parseFloat(fields.income)) errors.push({field:"income",message:"Income field must be a number"})
+  if(!parseFloat(fields.fortune)) errors.push({field:"fortune",message:"Fortune field must be a number"})
+  if(fields.deductions !== "" && !parseFloat(fields.deductions)) errors.push({field:"deductions",message:"Deductions field must be a number"})
+
   return errors
 }
 
@@ -171,11 +175,18 @@ const validateFormCompleted = createLogic({
   type: FORM_COMPLETED,
   validate({getState, action}, allow, reject){
     const state = getState()
-
-    if(!state.form.errors.length)
-      allow()
+    console.log("TAMER")
+    if(state.form.errors.length <= 0 && state.form.valid)
+      allow(action)
     else
       reject()
+  },
+  async process({getState, action}, dispatch, done){
+    //TODO define actions to perform on form completion
+    let state = getState();
+    const {data} = await api.fetchCalculations()
+    dispatch({type:TAX_CALCULATION_FETCH_SUCCESS, payload: data})
+    done();
   }
 })
 

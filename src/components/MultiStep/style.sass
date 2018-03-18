@@ -33,7 +33,13 @@ $bubbleHeight: 30px
   padding: 2px
   &--active
     background-color: #26A65B
+.steps
+  display: flex
+  flex-flow: row wrap
 .step
+  flex: 1 100%
+  clear: both
+  float: left
   // width: 100px
   // height: 100px
   // background-color: red
@@ -42,6 +48,12 @@ $bubbleHeight: 30px
   display: none
   visibility: hidden
   box-sizing: border-box
+  width: 100%
   &--active
     display: flex
     visibility: visible
+    align-items: stretch
+    & label
+      width: 100%
+      display: block
+      align-self: center

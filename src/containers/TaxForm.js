@@ -98,7 +98,6 @@ class TaxForm extends React.Component{
       this.props.formCompleted()
     }
     render(){
-        console.log(this.form())
         return (
             <div className="form-container">
             {
