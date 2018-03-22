@@ -1,30 +1,70 @@
 {
     "Département du territoire et de l'environnement":{
-        "total":  410274457.09
+        "Secrétariat général du DTE": 4138470.25,
+        "Direction générale de l'environnement": 132179641.99,
+        "Service du développement territorial": 12560476.96,
+        "Service des automobiles et de la navigation": 33939698.03,
+        "Service de la consommation et des affaires vétérinaires":14542341.15
     },
-    "Département de la formation, de la jeunesse et de la culture":{
-        "total":  469127914.41
+    "Département de la formation, de la jeunesse et de la culture":{                    
+        "Secrétariat général du DFJC":12257344.77,
+        "Direction générale de l'enseignement obligatoire":12017592.08,
+        "Scolarité enfantine, primaire, secondaire/classes de raccord": 921279194.21,
+        "Direction générale de l'enseignement postobligatoire": 70343563.23,
+        "Enseignement secondaire II": 420908748.23,
+        "Direction générale de l'enseignement supérieur": 828884134.64,
+        "Service des affaires culturelles": 78174127.04,
+        "Protection de la jeunesse": 152472735.78,
+        "Service de l'enseignement spécialisé et appui à la formation":367154625.65
     },
     "Département des institutions et de la sécurité":
     {
-        "total": 220253097.40
+        "Secrétariat général du DIS":64540326.86,
+        "Office des curatelles et tutelles professionnelles": 18423891.65,
+        "Service juridique et législatif": 62571982.82,
+        "Service de la sécurité civile et militaire": 22820927.42,
+        "Police cantonale": 199900833.10,
+        "Service pénitentiaire": 129870525.82,
+        "Service des communes et du logement": 24577130.82,
+        "Ministère Public": 42289945.11
     },
     "Département de la santé et de l'action sociale":{
-        "total":  1212430914.96
+        "Secrétariat général du DSAS": 6843449.68,
+        "Administration générale du SASH": 10015233.30,
+        "Régime cantonal de réduction des primes": 387239300.76,
+        "Prestations complémentaires AVS/AI": 521733003.80,
+        "Hébergement": 107668064.35,
+        "Hospitalisation": 3082317.05,
+        "Primes d'assur. maladie pour les prestations complémentaires": 189593100.52,
+        "Politique familiale et autres régimes sociaux":91912628.24,
+        "Promotion du maintien à domicile": 69912636.80,
+        "Service de prévoyance et d'aide sociales": 800692371.71,
+        "Administration générale du SSP": 48391646.23,
+        "Système de santé": 1332944856.13,
+        "Chancellerie d'Etat": 12844561.57,
+        "Contrôle cantonal des finances": 3365836.24
     },
     "Département de l'économie et du sport":{
-        "total": 528413889.40
+        "Secrétariat général du DECS": 3042036.06,
+        "Service de l'emploi": 122721794.54,
+        "Service de l'agriculture et de la viticulture": 316839068.93,
+        "Service de l'éducation physique et du sport": 9499690.05,
+        "Service de la population":204937690.28,
+        "Service de la promotion économique et du commerce": 52712566.82
     },
     "Département des infrastructures et des ressources humaines":{
-        "total": 148424457.69
+        "Secrétariat général du DIRH":51191504.65,
+        "Direction générale de la mobilité et des routes": 334711627.96,
+        "Direction des systèmes d'information":133754483.08,
+        "Service du personnel de l'Etat de Vaud": 17669757.44
     },
     "Département des finances et des relations extérieures":{
-        "total": 6749724733.50
+        "total": 984328546.73
     },
     "Ordre judiciaire vaudois":{
-        "total": 86382210.92
+        "total": 149986076.65
     },
-    "Secrétariat général du Grand Consei":{
-        "total":2979.10
+    "Secrétariat général du Grand Conseil":{
+        "total": 7296569.74
     }
 }
