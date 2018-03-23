@@ -2,20 +2,30 @@ import React from 'react'
 import PropTypes from "prop-types";
 
 import {connect} from 'react-redux'
-import {debounce} from 'lodash'
 
 import {updateTaxInputFormData,resetTaxInputForm,completeTaxForm} from '../actions/taxForm'
 
 import './TaxForm.sass'
-
+import './form.sass'
 import MultiStep from '../components/MultiStep'
+
+import Slider from 'react-rangeslider' 
+import 'react-rangeslider/lib/index.css' 
+import Switch from 'react-toggle-switch'
+import NumericInput from 'react-numeric-input';
 
 const doesFieldHaveErrors = (fieldName, errors) => {
   return errors.reduce( (acc, error)=>{
-    if(error.field == fieldName) acc = true
+    if(error.field === fieldName) acc = true
 
     return acc
   } ,false)
+}
+const errorsForField = (fieldName, errors) => {
+    return errors.reduce( (acc, error)=>{
+        if(error.field === fieldName) acc.push(error.message)
+        return acc
+      } ,[])
 }
 
 const mapStateToProps = (state) => {
@@ -52,6 +62,9 @@ class TaxForm extends React.Component{
         const target = e.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
+        return this.updateField(name, value)
+    }
+    updateField = (name, value) => {
         this.setState( ({form}) => (
             {
                 form:{
@@ -63,7 +76,8 @@ class TaxForm extends React.Component{
             /*let isFormCompleted = Object.keys(this.state.form).every(val => this.state.form[val] && this.state.form[val].length >= 1);
 
             if(isFormCompleted)*/
-            debounce(()=>this.props.updateInput({name, value}),1000)()
+            this.props.updateInput({name, value})
+            console.log(this.state)
         })
     }
     resetForm(){
@@ -71,53 +85,125 @@ class TaxForm extends React.Component{
         this.props.reset()
     }
     form = () => {
-      const field = (displayName, fieldname, type="text") => (
-        <label><span>{displayName}: </span><input type={type} name={fieldname} className={[doesFieldHaveErrors(fieldname, this.props.errors) ? 'error' : null]} onChange={this.handleChange} value={this.state.form[fieldname]}/></label>
-      )
+      const field = (displayName, fieldname, type="text", autofocus = false) => {         
+          return (
+            <div className="form-input">
+                <input type={type} name={fieldname} className={[doesFieldHaveErrors(fieldname, this.props.errors) ? 'error' : 'valid', "input"].join(" ")} onChange={this.handleChange} value={this.state.form[fieldname]}/>
+                <label>{displayName}</label>
+                {
+                    doesFieldHaveErrors(fieldname, this.props.errors) ? 
+                    (
+                        <div className="requirements">
+                            {errorsForField(fieldname, this.props.errors).map(t => (<span>{t}</span>))}
+                        </div>
+                    )
+                    :
+                    null
+                }
+                
+            </div>
+          )
+          
+      }
       return [
-          <div>
-            {field("Firstname", "firstname")}
+          <div key="first-step">
+            {field("Firstname", "firstname", "text",true)}
             {field("Last name", "lastname")}
             {field("Email", "email")}
           </div>,
-          <div>
-            {field("Income", "income")}
+          <div  key="second-step">
+            {field("Income", "income","text", true)}
             {field("Fortune", "fortune")}
             {field("Deductions", "deductions")}
           </div>,
-          <div>
-            {field("Children?","children", "checkbox")}
+          <div key="third-step">
+            <div className="form-input">
+                <label>Children?</label>
+                <Switch className="input" onClick={()=>this.updateField("children", !this.state.form.children)} on={this.state.form.children}/>
+            </div>
             { this.state.form.children ? field("Number of children", "nb_children") : null}
           </div>,
-          <div>
-            {field("Married","married","checkbox")}
+          <div key="fourth-step">
+            <div className="form-input">
+                <label>Married?</label>
+                <Switch className="input" onClick={()=>this.updateField("married", !this.state.form.married)} on={this.state.form.married}/>
+            </div>
           </div>
         ]
     }
+    formCompleted = () => {
+        const v = (key) => (val) => this.props.updateInput({name: key, value : val})  
+    return (
+        <div>
+            <span>Fortune :</span>
+            <Slider 
+                min={0} 
+                max={this.state.income * 2} 
+                step={100} 
+                value={this.state.income} 
+                orientation={"horizontal"} 
+                reverse={false} 
+                tooltip={true} 
+                labels={null} 
+                handleLabel={null} 
+
+                onChangeComplete={v("fortune")} 
+            /> 
+
+            <span>Income :</span>
+            <Slider 
+                min={0} 
+                max={this.state.income * 2} 
+                step={100} 
+                value={this.state.income} 
+                orientation={"horizontal"} 
+                reverse={false} 
+                tooltip={true} 
+                labels={null} 
+                handleLabel={null} 
+
+                onChangeComplete={v("income")} 
+            />
+            <span>Deductions :</span>
+            <Slider 
+                min={0} 
+                max={this.state.income * 2} 
+                step={100} 
+                value={this.state.income} 
+                orientation={"horizontal"} 
+                reverse={false} 
+                tooltip={true} 
+                labels={null} 
+                handleLabel={null} 
+
+                onChangeComplete={v("deductions")} 
+            />
+            <Switch onClick={()=>this.props.updateInput({name: "children",value: !this.state.children})} on={this.state.children}/>
+            {this.state.children ? <NumericInput value={this.state.nb_children} onChange={(val)=>this.props.updateInput({name:"nb_children", value: val})} /> : null}
+            <Switch onClick={()=>this.props.updateInput({name: "married",value: !this.state.married})} on={this.state.married}/> 
+            <button onClick={this.resetForm}><span>reset</span></button>
+        </div>
+    )}
     handleFormCompleted = () => {
       this.props.formCompleted()
     }
     render(){
         return (
-            <div className="form-container">
-            {
-              this.state.finished ?
-                (
-                  <div className="form-container--finished">
-                    {this.form()}
-                    <button onClick={this.resetForm}><span>reset</span></button>
-                  </div>
-                )
-                :
-                (
-                  <div className="form-container--unfinished">
-                    <MultiStep onFinish={this.handleFormCompleted}>
-                        {this.form()}
-                    </MultiStep>
-                  </div>
-                )
-            }
-
+            <div className={["form-container", this.state.finished ? "form-container--finished": "form-container--unfinished"].join(" ")}>
+                <div className="form">
+                    {
+                    this.state.finished ?
+                        (
+                            this.formCompleted()
+                        )
+                        :
+                        (
+                            <MultiStep onFinish={this.handleFormCompleted}>
+                                {this.form()}
+                            </MultiStep>
+                        )
+                    }
+                </div>
             </div>
         )
     }

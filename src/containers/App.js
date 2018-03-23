@@ -6,9 +6,8 @@ import {connect} from 'react-redux'
 import Error from "./Error";
 import TaxForm from "./TaxForm"
 import Graph from "./Graph"
-import Loader from './Loader'
+import Loader from '../components/Loader'
 
-import SwissMap from '../assets/switzerland.svg'
 import './App.sass'
 
 const mapStateToProps = (state) => {    return {

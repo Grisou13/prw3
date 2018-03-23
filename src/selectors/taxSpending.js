@@ -3,10 +3,7 @@ import { percentPerSection } from './taxCalculation';
 import { formSelector } from './form'
 // https://github.com/reactjs/reselect
 
-const taxSpendingSelector = state => state.spending
-const taxSectionSelector = key => state => state.spending[key]
-
-const calculationSelector = state => state.calculation
+export const calculationSelector = state => state.calculation
 
 
 // get the value object if val is in between 2 keys
@@ -61,12 +58,12 @@ const taxCalculationMapping = {
   },
   federalTaxMarried:{
     formKey: "income",
-    if: (form) => form.married == true,
+    if: (form) => form.married === true,
     cb: (data, calc) => getValueInRange(calc, data)
   },
   federalTaxSingleAsF:{
     formKey: "income",
-    if: (form) => form.married == false,
+    if: (form) => form.married === false,
     cb: (data, calc) => getValueInRange(calc, data)
   }
 }

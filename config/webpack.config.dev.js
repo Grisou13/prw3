@@ -218,6 +218,7 @@ module.exports = {
               {
                 loader: 'sass-resources-loader',
                 options: {
+                  includePaths: [paths.appNodeModules],
                   resources: "./src/assets/resources/**/*.sass"
                 }
               },

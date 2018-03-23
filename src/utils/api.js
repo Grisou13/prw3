@@ -1,9 +1,9 @@
 import axios from 'axios'
 export default class Api {
   static fetchCalculations(canton = null) {
-    return axios.get("/calculations.json")
+    return axios.get("/calculation.json").then(resp => resp.data)
   }
   static fetchSpendings(){
-    return axios.get("/spendings.json")
+    return axios.get("/spendings.json").then(resp => resp.data)
   }
 }

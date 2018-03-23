@@ -1,18 +1,15 @@
 import { createSelector } from 'reselect'
-import { formSelector } from './form'
+
 // https://github.com/reactjs/reselect
 
-
-const spendingSelector = state => state.spendings
-
-const taxSpendingSelector = state => state.spendings
-const taxSectionSelector = key => state => state.spendings[key]
+export const taxSpendingSelector = state => state.spendings
+export const taxSectionSelector = key => state => state.spending[key]
 
 // sums up an object that has float/integer values and gives you the sum
 // this method is recursive on an object
 // this method can't be used with complex json objects
 
-const sum = (obj) => {
+export const sum = (obj) => {
   return Object.keys(obj)
     .reduce(function (sum_, key) {
       if (typeof obj[key] === "array" || typeof obj[key] === "object") {

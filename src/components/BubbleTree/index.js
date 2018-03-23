@@ -1,20 +1,16 @@
 import React from 'react';
-import { findDOMNode } from 'react-dom';
 
+// BubbleTree is included as normal script in index.html
 const $ = window.$
 const BubbleTree = window.BubbleTree
 class BubbleTreeComponent extends React.Component {
 
-    constructor(){
-        super();
-    }
     componentDidMount(){
-        console.log(window.$)
         this.$el = $(this.el);
 
         var data = this.props.data
-
-        let c = new BubbleTree({
+        console.log(data)
+        new BubbleTree({
             data: data,
             container: this.el,
             nodeClickCallback: (node) => console.log(node)

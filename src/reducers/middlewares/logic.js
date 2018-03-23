@@ -1,15 +1,14 @@
 // https://github.com/jeffbski/redux-logic/blob/master/docs/where-business-logic.md#redux-logic---a-new-approach
 import { createLogic } from 'redux-logic';
-import axios from 'axios'
 
 import {TAX_SPENDING_FETCH,TAX_SPENDING_FETCH_CANCEL,TAX_SPENDING_FETCH_SUCCESS,TAX_SPENDING_FETCH_FAILED} from '../../consts/taxSpending'
 import {TAX_CALCULATION_FETCH,TAX_CALCULATION_FETCH_CANCEL,TAX_CALCULATION_FETCH_SUCCESS, TAX_CALCULATION_FETCH_FAILED} from '../../consts/taxCalculation'
 import {FORM_COMPLETED} from '../../consts/taxForm'
-import {APP_BOOT, APP_READY} from '../../consts/app'
+import {APP_BOOT} from '../../consts/app'
 
-import {fetchTaxCalculations, fetchTaxSpendings} from '../../actions/taxData'
+import {fetchTaxSpendings} from '../../actions/taxData'
 import {appReady as appReadyAction} from '../../actions/app'
-import {isEmpty} from 'lodash'
+
 import { UPDATE_TAX_FORM } from '../../consts/taxForm';
 import { formSelector } from '../../selectors/form'
 import { taxFormInvalid } from './../../actions/taxForm'
@@ -31,35 +30,8 @@ const fetchTaxSpendingsLogic = createLogic({
   // and automatically applying the actions to the raw values which
   // get mapped to the action payload
   process({ getState, action }) {
-    return api.fetchSpendings() /*{
-      education:{
-        total: 20000, // normally tax data should include all the sub categories of spending for a given district, but for now since we don't have a way of autmating that, we just get the total which will give us a final computed value for total of the total, which is dumb
-    },
-    envirronement:{
-        total:10000, //same here
-
-    },
-    health:{
-        total: 10000
-    },
-    sports: {
-        total:10000,
-
-    },
-    humanRessources:{
-        total:10000
-    },
-    court:{
-        total: 10000,
-
-    },
-    secretariat:{
-        total:10000,
-
-    }
-  }*/
-    //return axios.get(`http://46.101.134.181/api/me?token=root`)
-    //  .then(resp => resp.data);
+    return api.fetchSpendings()
+      
   }
 });
 
@@ -79,34 +51,7 @@ const fetchTaxCalculationsLogic = createLogic({
   // and automatically applying the actions to the raw values which
   // get mapped to the action payload
   process({ getState, action }) {
-    return api.fetchCalculations() /*{
-      fortune:{
-        0:0,
-        40000: 0.014, //fortuneMinima : tax percent taken
-
-    },
-    income:{
-        0:0,
-        40000: 0.014,
-
-    },
-    nb_children:{
-        0:0,
-        1:-700,
-        2:-1400,
-        3:-2100
-    },
-    federalTaxSingleAsF:{
-        0:0,
-        40000: 0.014,
-    },
-    federalTaxMarried:{
-      0:0,
-      40000: 0.4,
-    },
-  }*/
-    //return axios.get(`http://46.101.134.181/api/me?token=root`)
-    //  .then(resp => resp.data);
+    return api.fetchCalculations() 
   }
 });
 
@@ -133,7 +78,7 @@ const appReady = createLogic({
   },
   warnTimeout : 2000,
   process({getState, action}, dispatch, done){
-    let state = getState();
+    //let state = getState();
     if(true){ //TODO define custom logic for app ready
 
       dispatch(appReadyAction())
@@ -149,6 +94,8 @@ const validateFields = (fields) => {
   if(!parseFloat(fields.income)) errors.push({field:"income",message:"Income field must be a number"})
   if(!parseFloat(fields.fortune)) errors.push({field:"fortune",message:"Fortune field must be a number"})
   if(fields.deductions !== "" && !parseFloat(fields.deductions)) errors.push({field:"deductions",message:"Deductions field must be a number"})
+  if(fields.children && !fields.nb_children.trim().length) errors.push({field:"nb_children",message:"Number of children field can't be empty"})
+  if(fields.children && !parseFloat(fields.nb_children)) errors.push({field:"nb_children",message:"Number of children must be a number"})
 
   return errors
 }
@@ -175,7 +122,6 @@ const validateFormCompleted = createLogic({
   type: FORM_COMPLETED,
   validate({getState, action}, allow, reject){
     const state = getState()
-    console.log("TAMER")
     if(state.form.errors.length <= 0 && state.form.valid)
       allow(action)
     else
@@ -183,7 +129,6 @@ const validateFormCompleted = createLogic({
   },
   async process({getState, action}, dispatch, done){
     //TODO define actions to perform on form completion
-    let state = getState();
     const {data} = await api.fetchCalculations()
     dispatch({type:TAX_CALCULATION_FETCH_SUCCESS, payload: data})
     done();

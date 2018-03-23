@@ -16,14 +16,16 @@ const formatError = (error) => {
 @connect((state)=>({error:state.errors}))
 export default class Error extends React.Component {
   render(){
-    const {error} = this.props;
-    console.error(error)
-    if(error)
-      return (
-          <div className="error">
-              <p>{formatError(error)}</p>
-          </div>
-      )
+    const {error} = this.props;        
+    if(error){
+        console.error(error)
+        return (
+            <div className="error">
+                <p>{formatError(error)}</p>
+            </div>
+        )
+    }
+     
     else
       return null
   }

@@ -1,7 +1,9 @@
+@import "~react-toggle-switch/dist/css/switch.min.css"
+
 .fadein-enter
   opacity: 0.01
   width: 0px
-  display: flex
+  display: block
   visibility: visible
 
 
@@ -34,8 +36,8 @@ $bubbleHeight: 30px
   &--active
     background-color: #26A65B
 .steps
-  display: flex
-  flex-flow: row wrap
+  //display: flex
+  //flex-flow: row wrap
 .step
   flex: 1 100%
   clear: both
@@ -50,10 +52,10 @@ $bubbleHeight: 30px
   box-sizing: border-box
   width: 100%
   &--active
-    display: flex
+    display: block
     visibility: visible
     align-items: stretch
-    & label
+    /*& label
       width: 100%
       display: block
-      align-self: center
+      align-self: center*/

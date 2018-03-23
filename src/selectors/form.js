@@ -3,10 +3,10 @@ import { createSelector } from 'reselect'
 
 // TODO create selectors for all the tax spendings, and accumulate them in a total
 // TODO create percentages with that and the total amount of income and taxes a person payes
-const taxSpendingSelector = state => state.spending
-const taxSectionSelector = key => state => state.spending[key]
-const taxable = state => state.form.fields.income + state.form.fields.fortune
-const deductionsSelector = state => state.form.fields.deductions
+export const taxSpendingSelector = state => state.spending
+export const taxSectionSelector = key => state => state.spending[key]
+export const taxable = state => state.form.fields.income + state.form.fields.fortune
+export const deductionsSelector = state => state.form.fields.deductions
 export const formSelector = state => state.form.fields
 
 /*

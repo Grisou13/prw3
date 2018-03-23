@@ -1,0 +1,94 @@
+.form-container
+  & .form
+    max-width: 450px
+    margin: 0 auto
+
+  // positioning context
+  .form-input
+    position: relative
+    background: white
+    border-bottom: 1px solid #ccc
+    padding-top: 18px
+    // Looks like placeholder
+    > label
+      opacity: 0.3
+      font-weight: bold
+      position: absolute
+      top: 22px
+      left: 20px
+    > .input.switch, input[type="checkbox"]
+      margin-left: 200px
+      margin-bottom: 10px
+    > input[type="text"],
+    > input[type="email"],
+    > input[type="password"]
+      margin-top: -18px
+      width: 100%
+      border: 0
+      padding: 20px 20px 20px 50px
+      background: #eee
+
+      &:focus
+        // removing default focus style
+        outline: 0
+
+        // adding new one
+        background: white
+
+        & + label
+          opacity: 0
+
+      &.valid
+        background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/check.svg)
+        background-size: 20px
+        background-repeat: no-repeat
+        background-position: 20px 20px
+
+        & + label
+          opacity: .3
+          top: 1px
+          left: 2px
+          font-size: 8px
+
+      &.error:not(:focus)
+        background: pink
+
+        & + label
+          opacity: 0.5
+          top: 2px
+          left: 2px
+          font-size: 14px
+          color: #D91E18
+      &.error:focus, 
+        & ~ .requirements
+          max-height: 200px
+          padding: 0 30px 20px 50px
+
+    .requirements
+      padding: 0 30px 0 50px
+      color: #999
+      max-height: 0
+      transition: 0.28s
+      overflow: hidden
+      color: red
+      font-style: italic
+      & span
+        display: block
+
+  input[type="submit"]
+    display: block
+    width: 100%
+    margin: 20px 0
+    background: #41D873
+    color: white
+    border: 0
+    padding: 20px
+    font-size: 1.2rem
+
+.form-container
+  background: #333
+  font-family: sans-serif
+  padding: 20px
+
+*
+  box-sizing: border-box

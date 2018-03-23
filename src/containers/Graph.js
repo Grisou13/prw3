@@ -6,14 +6,14 @@ import {connect} from 'react-redux'
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Legend, Tooltip, Radar, RadarChart, PolarGrid,
     PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
-import {totalSelector, spendingsSelector, percentPerSection} from '../selectors/taxCalculation'
+import {totalSelector, spendingsSelector, percentPerSection, sum, taxSpendingSelector} from '../selectors/taxCalculation'
 import {calculateTaxes, spendingsPerSection} from '../selectors/taxSpending'
 
 import BubbleTree from "../components/BubbleTree";
 
 import './Graph.sass'
 
-
+console.log(sum)
 //map object to array
 const mapToData = (...data) => data.map(obj => Object.keys(obj.data).reduce( (acc, k)=> {
     acc.push({name:k,[obj.key ? obj.key : 'value']:obj.data[k]})
@@ -46,29 +46,48 @@ const mapToData = (...data) => data.map(obj => Object.keys(obj.data).reduce( (ac
     return o;
   }, []);
 
+const bubbleTreeObject = (name, data) => ({
+    label:name, 
+    amount: data[name], 
+    dataKey:name, color:"#bb0066" 
+})
  const eachRecursive = (obj) => 
-  {
-      for (var k in obj)
-      {
-          if (typeof obj[k] == "object" && obj[k] !== null)
-              obj.children = eachRecursive(obj[k]);
-          else
-            return Object.keys(obj).reduce( (acc, k) => {acc.push({label:k, amount:obj[k], dataKey:k, color:"#bb0066" }); return acc}, [])
-      }
-  }
-const mapToBubbletree = (total, data) => {
+  {  
+    console.log(obj)
+    
+    // we have a single departement in obj
+
+    
+    // if the departement has more details
+    
+    return Object.keys(obj).reduce( (acc, k) => {
+        let ret = bubbleTreeObject(k, obj)
+        let children = []
+        let o = bubbleTreeObject(k, obj)
+
+        if (typeof obj[k] === "object" && obj[k] !== null){
+            o.amount = sum(obj[k])
+            children = eachRecursive(obj[k]); // handle subdepartements
+        }
+        o.children = children
+        acc.push(o)
+        return acc
+    }, [])
+
+}
+const mapToBubbletree = (data) => {
     return {
-    label: "Total", 
-    amount: total, 
-    color:'#0066bb', 
-    children : eachRecursive(data)
+        label: "Total", 
+        amount: sum(data), 
+        color:'#0066bb', 
+        children : eachRecursive(data)
     }
 }
 
 const mapStateToProps = (state) => ({
         spendings: mapToData({data:spendingsSelector(state)}),
         taxes: calculateTaxes(state) ,
-        allSpendings : mapToBubbletree(totalSelector(state), spendingsSelector(state)),
+        allSpendings : mapToBubbletree(taxSpendingSelector(state)),
         spendingsSection :mapToData({key:'mine',data:spendingsPerSection(state)}, {key:'state',data:spendingsSelector(state)}),
         percentStateSpendings : mapToData({key:'value',data: percentPerSection(state)})
 })
@@ -105,7 +124,7 @@ export default class Graph extends React.Component {
                 )}
                 
                 {! this.props.percentStateSpendings ? null : graph(
-                    <RadarChart cx={300} cy={250} outerRadius={150} width={600} height={500} data={this.props.percentStateSpendings}>
+                    <RadarChart cx={300} cy={250} outerRadius={150} width={800} height={600} data={this.props.percentStateSpendings}>
                         <PolarGrid />
                         <PolarAngleAxis dataKey="name" />
                         <PolarRadiusAxis/>

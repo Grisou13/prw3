@@ -36,21 +36,26 @@ class MultiStep extends React.Component {
       return {currentStep : prevState.currentStep -= 1}
     })
   }
+  gotoStep = (index) => {
+    this.setState((prevState, props) => {
+      return {currentStep : index}
+    })
+  }
   render(){
     return (
       <div className="step-container">
 
         <div className="steps-counter">
-          { this.props.children.map( (step, index, array) => (<span key={index} className={["step-counter","step-counter--"+(index <= this.state.currentStep ? "active" : "inactive")].join(' ')}>{index}</span>) )}
+          { this.props.children.map( (step, index, array) => (<span onClick={()=>this.gotoStep(index)} key={index} className={["step-counter","step-counter--"+(index <= this.state.currentStep ? "active" : "inactive")].join(' ')}>{index}</span>) )}
         </div>
         <div className="steps">
             <ReactCSSTransitionGroup transitionName="fadein" transitionEnterTimeout={700} transitionLeaveTimeout={700}>
-              {this.props.children.map( (step, index, array) => (<Step key={index} active={this.state.currentStep == index} component={step} />) )}
+              {this.props.children.map( (step, index, array) => (<Step key={index} active={this.state.currentStep === index} component={step} />) )}
             </ReactCSSTransitionGroup >
         </div>
         <div className="controls">
           { this.state.currentStep > 0 ? (<button onClick={this.gotoPreviousStep}><span>Previous</span></button>) : null}
-          { this.state.currentStep == this.state.stepCount ? (<button onClick={this.onFinish}><span>See my results</span></button>) : (<button onClick={this.gotoNextStep}><span>Next</span></button>)}
+          { this.state.currentStep === this.state.stepCount ? (<button onClick={this.onFinish}><span>See my results</span></button>) : (<button onClick={this.gotoNextStep}><span>Next</span></button>)}
         </div>
       </div>
     )
