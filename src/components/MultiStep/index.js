@@ -46,12 +46,12 @@ class MultiStep extends React.Component {
       <div className="step-container">
 
         <div className="steps-counter">
-          { this.props.children.map( (step, index, array) => (<span onClick={()=>this.gotoStep(index)} key={index} className={["step-counter","step-counter--"+(index <= this.state.currentStep ? "active" : "inactive")].join(' ')}>{index}</span>) )}
+          { this.props.children.map( (step, index, array) => (<span onClick={()=>this.gotoStep(index)} key={index} className={["step-counter","step-counter--"+(index == this.state.currentStep ? "active" : index <= this.state.currentStep ? "done": "inactive")].join(' ')}><span>{index}</span></span>) )}
         </div>
         <div className="steps">
-            <ReactCSSTransitionGroup transitionName="fadein" transitionEnterTimeout={700} transitionLeaveTimeout={700}>
+
               {this.props.children.map( (step, index, array) => (<Step key={index} active={this.state.currentStep === index} component={step} />) )}
-            </ReactCSSTransitionGroup >
+            
         </div>
         <div className="controls">
           { this.state.currentStep > 0 ? (<button onClick={this.gotoPreviousStep}><span>Previous</span></button>) : null}

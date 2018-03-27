@@ -3,7 +3,7 @@
 .fadein-enter
   opacity: 0.01
   width: 0px
-  display: block
+  display: inline-flex
   visibility: visible
 
 
@@ -23,21 +23,78 @@
   width: 0px
   transition: 700ms
 
-$bubbleHeight: 30px
+$bubbleHeight: 40px
+$junctionHeight: 5px
+.steps-counter
+  // display: flex
+  margin-bottom: 10px
+  margin: 0
+  padding-bottom: 2.2rem
+  list-style-type: none
 .step-counter
-  border-radius: 50%
-  background-color: #19B5FE
-  width: $bubbleHeight
-  height: $bubbleHeight
-  line-height: $bubbleHeight
-  display: table-cell
+  &:hover::before
+    color: black
+  &:before
+    content:  " "
+    color: white
+    background-color: silver
+    width: 1.2em
+    line-height: 1.4em
+
+    border-radius: 1.2em
+    position: relative
+    bottom: -3.9rem
+    float: left
+    left: 45%
+  &::after
+    content: "\00a0\00a0"
+  & span
+    padding: 0 1.5rem
+  // border-radius: 50%
+  // background-color: #19B5FE
+  // width: $bubbleHeight+2
+  // height: $bubbleHeight
+  // line-height: $bubbleHeight - 6
+  // display: inline-block
+  // text-align: center
+  // padding: 2px
+  // margin: 0 auto
+  display: inline-block
   text-align: center
-  padding: 2px
+  line-height: 4.5rem
+  padding: 0 0.7rem
+  cursor: pointer
+  color: silver
+  border-bottom: 4px solid silver
+
+  &--done
+    border-bottom: 4px solid #26A65B
+    &::before
+      content: "\2713"
+      background-color: #26A65B
+      border-radius: 1.2em
+      line-height: 1.2em
   &--active
-    background-color: #26A65B
+    border-bottom: 4px solid #33C3F0
+    &::before
+      background-color: #33C3F0
+      border-radius: 1.2em
+.controls
+  margin-top: 12px
+  display: flex
+  align-items: stretch
+  & button
+    display: inline-flex
+    padding: 4px
+    margin: 0 auto
+    width: 100%
+    margin-left: 5px
+    margin-right: 5px
+    & span
+      margin: 0 auto
 .steps
-  //display: flex
-  //flex-flow: row wrap
+    display: flex
+    height: 100%
 .step
   flex: 1 100%
   clear: both
