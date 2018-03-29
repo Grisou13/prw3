@@ -31,25 +31,31 @@ $junctionHeight: 5px
   margin: 0
   padding-bottom: 2.2rem
   list-style-type: none
+  display: flex
+  align-items: stretch
+  justify-content: center
 .step-counter
   &:hover::before
     color: black
-  &:before
+  @media screen and (max-width: 380px)
+    &:after
+      //left: 32% !important
+      //bottom: -11px !important
+  &:after
     content:  " "
     color: white
     background-color: silver
-    width: 1.2em
-    line-height: 1.4em
-
-    border-radius: 1.2em
+    width: 10px
+    line-height: 10px
+    height: 10px
+    border-radius: 50%
+    left: -50%
+    bottom: -96%
     position: relative
-    bottom: -3.9rem
-    float: left
-    left: 45%
-  &::after
-    content: "\00a0\00a0"
+    
   & span
-    padding: 0 1.5rem
+    padding: 10px auto
+    margin: 0 auto
   // border-radius: 50%
   // background-color: #19B5FE
   // width: $bubbleHeight+2
@@ -59,26 +65,30 @@ $junctionHeight: 5px
   // text-align: center
   // padding: 2px
   // margin: 0 auto
-  display: inline-block
+  display: flex
   text-align: center
-  line-height: 4.5rem
-  padding: 0 0.7rem
+  line-height: 50px
+  //padding: 0 0.7rem
   cursor: pointer
   color: silver
   border-bottom: 4px solid silver
-
+  width: 100%
   &--done
     border-bottom: 4px solid #26A65B
-    &::before
+    &::after
       content: "\2713"
       background-color: #26A65B
-      border-radius: 1.2em
-      line-height: 1.2em
+      border-radius: 100%
+      line-height: 20px
+      bottom: -90% !important
+      width: 20px
+      height: 20px
   &--active
     border-bottom: 4px solid #33C3F0
-    &::before
-      background-color: #33C3F0
-      border-radius: 1.2em
+    &::after
+      
+      background-color: white
+      border-radius: 10px
 .controls
   margin-top: 12px
   display: flex

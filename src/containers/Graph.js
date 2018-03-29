@@ -105,7 +105,7 @@ const graph = (children) => (
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Graph extends React.Component {
     render(){
-        console.log(this.props)
+        
         return (
             <div className="graph-container">
                 {! this.props.spendingsSection ? null :  graph(

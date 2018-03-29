@@ -84,7 +84,7 @@ class TaxForm extends React.Component{
         this.setState({form: Object.assign({},this.props.form, {married:false, children: false})})
         this.props.reset()
     }
-    form = () => {
+    form = (props) => {
       const field = (displayName, fieldname, type="text", autofocus = false) => {         
           return (
             <div className="form-input">
@@ -132,7 +132,7 @@ class TaxForm extends React.Component{
         ]
     }
     formCompleted = () => {
-        const v = (key) => (val) => this.props.updateInput({name: key, value : val})  
+        const v = (name) => (value) => this.props.updateInput({name, value})  
     return (
         <div>
             <span>Fortune :</span>
@@ -142,10 +142,6 @@ class TaxForm extends React.Component{
                 step={100} 
                 value={this.state.income} 
                 orientation={"horizontal"} 
-                reverse={false} 
-                tooltip={true} 
-                labels={null} 
-                handleLabel={null} 
 
                 onChangeComplete={v("fortune")} 
             /> 
@@ -157,10 +153,6 @@ class TaxForm extends React.Component{
                 step={100} 
                 value={this.state.income} 
                 orientation={"horizontal"} 
-                reverse={false} 
-                tooltip={true} 
-                labels={null} 
-                handleLabel={null} 
 
                 onChangeComplete={v("income")} 
             />
@@ -171,10 +163,6 @@ class TaxForm extends React.Component{
                 step={100} 
                 value={this.state.income} 
                 orientation={"horizontal"} 
-                reverse={false} 
-                tooltip={true} 
-                labels={null} 
-                handleLabel={null} 
 
                 onChangeComplete={v("deductions")} 
             />
@@ -185,9 +173,11 @@ class TaxForm extends React.Component{
         </div>
     )}
     handleFormCompleted = () => {
-      this.props.formCompleted()
+        this.setState( (prevState, props) => ({finished: true}))
+        this.props.formCompleted()
     }
     render(){
+        console.log("IS FORM FINISHED?",this.state.finished)
         return (
             <div className={["form-container", this.state.finished ? "form-container--finished": "form-container--unfinished"].join(" ")}>
                 <div className="form">
