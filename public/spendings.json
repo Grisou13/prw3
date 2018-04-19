@@ -1,12 +1,12 @@
 {
-    "Département du territoire et de l'environnement":{
+    "Territoire & environnement":{
         "Secrétariat général du DTE": 4138470.25,
         "Direction générale de l'environnement": 132179641.99,
         "Service du développement territorial": 12560476.96,
         "Service des automobiles et de la navigation": 33939698.03,
         "Service de la consommation et des affaires vétérinaires":14542341.15
     },
-    "Département de la formation, de la jeunesse et de la culture":{                    
+    "Formation, la jeunesse et culture":{                    
         "Secrétariat général du DFJC":12257344.77,
         "Direction générale de l'enseignement obligatoire":12017592.08,
         "Scolarité enfantine, primaire, secondaire/classes de raccord": 921279194.21,
@@ -17,7 +17,7 @@
         "Protection de la jeunesse": 152472735.78,
         "Service de l'enseignement spécialisé et appui à la formation":367154625.65
     },
-    "Département des institutions et de la sécurité":
+    "Institutions et Sécurité":
     {
         "Secrétariat général du DIS":64540326.86,
         "Office des curatelles et tutelles professionnelles": 18423891.65,
@@ -28,7 +28,7 @@
         "Service des communes et du logement": 24577130.82,
         "Ministère Public": 42289945.11
     },
-    "Département de la santé et de l'action sociale":{
+    "Santé et action sociale":{
         "Secrétariat général du DSAS": 6843449.68,
         "Administration générale du SASH": 10015233.30,
         "Régime cantonal de réduction des primes": 387239300.76,
@@ -44,7 +44,7 @@
         "Chancellerie d'Etat": 12844561.57,
         "Contrôle cantonal des finances": 3365836.24
     },
-    "Département de l'économie et du sport":{
+    "économie et sport":{
         "Secrétariat général du DECS": 3042036.06,
         "Service de l'emploi": 122721794.54,
         "Service de l'agriculture et de la viticulture": 316839068.93,
@@ -52,13 +52,13 @@
         "Service de la population":204937690.28,
         "Service de la promotion économique et du commerce": 52712566.82
     },
-    "Département des infrastructures et des ressources humaines":{
+    "Infrastructures et ressources humaines":{
         "Secrétariat général du DIRH":51191504.65,
         "Direction générale de la mobilité et des routes": 334711627.96,
         "Direction des systèmes d'information":133754483.08,
         "Service du personnel de l'Etat de Vaud": 17669757.44
     },
-    "Département des finances et des relations extérieures":{
+    "Finances et relations extérieures":{
         "total": 984328546.73
     },
     "Ordre judiciaire vaudois":{

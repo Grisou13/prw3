@@ -6,12 +6,12 @@ import {TAX_CALCULATION_FETCH,TAX_CALCULATION_FETCH_CANCEL,TAX_CALCULATION_FETCH
 import {FORM_COMPLETED} from '../../consts/taxForm'
 import {APP_BOOT} from '../../consts/app'
 
-import {fetchTaxSpendings} from '../../actions/taxData'
+import {fetchTaxSpendings, fetchTaxCalculations} from '../../actions/taxData'
 import {appReady as appReadyAction} from '../../actions/app'
 
 import { UPDATE_TAX_FORM } from '../../consts/taxForm';
 import { formSelector } from '../../selectors/form'
-import { taxFormInvalid } from './../../actions/taxForm'
+import { taxFormInvalid, updateTaxInputFormData } from './../../actions/taxForm'
 
 import api from '../../utils/api'
 const fetchTaxSpendingsLogic = createLogic({
@@ -66,6 +66,7 @@ const appBoot = createLogic({
   process({getState, action}, dispatch, done){
     //TODO define actions to dispatch and fetch on app start
     dispatch(fetchTaxSpendings())
+    dispatch(fetchTaxCalculations())
     done()
   }
 })
@@ -82,6 +83,7 @@ const appReady = createLogic({
     if(true){ //TODO define custom logic for app ready
 
       dispatch(appReadyAction())
+      dispatch(updateTaxInputFormData({name:"firstname", value:""}))
       done()
     }
   }
@@ -135,11 +137,20 @@ const validateFormCompleted = createLogic({
   }
 })
 
+const logDataForDatalab = createLogic({
+  type: FORM_COMPLETED,
+  process({getState, action}, dispatch, done){
+    const state = getState()
+    api.postData(state.form.fields)
+  }
+})
+
 export default [
   fetchTaxCalculationsLogic,
   fetchTaxSpendingsLogic,
   appReady,
   appBoot,
   validateFormUpdate,
-  validateFormCompleted
+  validateFormCompleted,
+  logDataForDatalab
 ]

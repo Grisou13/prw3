@@ -13,6 +13,8 @@ import DevTools from './containers/DevTools'
 
 import registerServiceWorker from './registerServiceWorker';
 
+console.log(process.env)
+
 const initialState = {}
 const store = configureStore(initialState)
 store.dispatch(appBoot())

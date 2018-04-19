@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 import {updateTaxInputFormData,resetTaxInputForm,completeTaxForm} from '../actions/taxForm'
 
 import './TaxForm.sass'
-import './form.sass'
+// import './form.sass'
 import MultiStep from '../components/MultiStep'
 
 import Slider from 'react-rangeslider' 
@@ -132,59 +132,58 @@ class TaxForm extends React.Component{
         ]
     }
     formCompleted = () => {
-        const v = (name) => (value) => this.props.updateInput({name, value})  
+        const v = (name) => (val) => this.props.updateInput({name, value: val.toString()})  
     return (
         <div>
             <span>Fortune :</span>
             <Slider 
                 min={0} 
-                max={this.state.income * 2} 
-                step={100} 
-                value={this.state.income} 
+                max={parseFloat(this.state.form.fortune) + 2^6} 
+                step={Math.round(Math.log10(this.props.form.fortune))} 
+                value={parseFloat(this.props.form.fortune)} 
                 orientation={"horizontal"} 
 
-                onChangeComplete={v("fortune")} 
+                onChange={v("fortune")} 
             /> 
 
             <span>Income :</span>
             <Slider 
                 min={0} 
-                max={this.state.income * 2} 
-                step={100} 
-                value={this.state.income} 
+                max={parseFloat(this.state.form.income) + 2^6 } 
+                step={Math.round(Math.log10(this.props.form.income))} 
+                value={parseFloat(this.props.form.income)} 
                 orientation={"horizontal"} 
 
-                onChangeComplete={v("income")} 
+                onChange={v("income")} 
             />
             <span>Deductions :</span>
             <Slider 
                 min={0} 
-                max={this.state.income * 2} 
-                step={100} 
-                value={this.state.income} 
+                max={parseFloat(this.state.form.deductions) + 2^6 } 
+                step={Math.round(Math.log10(this.props.form.deductions))} 
+                value={parseFloat(this.props.form.deductions)} 
                 orientation={"horizontal"} 
 
-                onChangeComplete={v("deductions")} 
+                onChange={v("deductions")} 
             />
-            <Switch onClick={()=>this.props.updateInput({name: "children",value: !this.state.children})} on={this.state.children}/>
-            {this.state.children ? <NumericInput value={this.state.nb_children} onChange={(val)=>this.props.updateInput({name:"nb_children", value: val})} /> : null}
-            <Switch onClick={()=>this.props.updateInput({name: "married",value: !this.state.married})} on={this.state.married}/> 
+            <Switch onClick={()=>this.props.updateInput({name: "children",value: !this.props.form.children})} on={this.props.form.children}/>
+            {this.props.children ? <NumericInput value={this.props.nb_children} onChange={(val)=>this.props.updateInput({name:"nb_children", value: val})} /> : null}
+            <Switch onClick={()=>this.props.updateInput({name: "married",value: !this.props.form.married})} on={this.props.form.married}/> 
             <button onClick={this.resetForm}><span>reset</span></button>
         </div>
     )}
-    handleFormCompleted = () => {
-        this.setState( (prevState, props) => ({finished: true}))
+    handleFormCompleted = () => {        
         this.props.formCompleted()
     }
     render(){
-        console.log("IS FORM FINISHED?",this.state.finished)
+        console.log("IS FORM FINISHED?",this.props)
         return (
             <div className={["form-container", this.state.finished ? "form-container--finished": "form-container--unfinished"].join(" ")}>
                 <div className="form">
                     {
-                    this.state.finished ?
+                    this.props.completed ?
                         (
-                            this.formCompleted()
+                            this.form()
                         )
                         :
                         (

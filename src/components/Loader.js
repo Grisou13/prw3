@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 export const Loader = ({}) =>{
         
     return (
-        <div className="loader">
-            loading ....
+        <div class="progress">
+            <div class="indeterminate"></div>
         </div>
     )
 }

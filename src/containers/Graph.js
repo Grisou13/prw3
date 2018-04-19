@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {connect} from 'react-redux'
 
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Legend, Tooltip, Radar, RadarChart, PolarGrid,
-    PolarAngleAxis, PolarRadiusAxis } from 'recharts';
+    PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
 import {totalSelector, spendingsSelector, percentPerSection, sum, taxSpendingSelector} from '../selectors/taxCalculation'
 import {calculateTaxes, spendingsPerSection} from '../selectors/taxSpending'
@@ -108,28 +108,35 @@ export default class Graph extends React.Component {
         
         return (
             <div className="graph-container">
+                <div>
+                    <h2>You owe the state {this.props.taxes} CHF in taxes</h2>
+                </div>
                 {! this.props.spendingsSection ? null :  graph(
-                    <BarChart width={960} height={300} data={this.props.spendingsSection} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                    <ResponsiveContainer>
+                    <BarChart  data={this.props.spendingsSection} margin={{ top: 5, right: 20, bottom: 5, left: 50 }}>
                         <XAxis dataKey="name" />
                         
                         <YAxis yAxisId="stateExpenses" orientation="left" stroke="#82ca9d"/>
                         <YAxis yAxisId="myExpenses" orientation="right" stroke="#8884d8"/>
                         <CartesianGrid strokeDasharray="5 5" />
-                        <Tooltip/>
+                        <Tooltip formatter={ (value, name, props) => value.toLocaleString('fr') + "CHF"}/>
                         <Legend />
                         <Bar yAxisId="stateExpenses" type="monotone" dataKey="state" fill="#82ca9d" />
                         <Bar yAxisId="myExpenses" type="monotone" dataKey="mine" fill="#8884d8" />
                         
                     </BarChart>
+                    </ResponsiveContainer>
                 )}
                 
                 {! this.props.percentStateSpendings ? null : graph(
-                    <RadarChart cx={300} cy={250} outerRadius={150} width={800} height={600} data={this.props.percentStateSpendings}>
+                    <ResponsiveContainer>
+                    <RadarChart outerRadius={90} width={960} height={350} data={this.props.percentStateSpendings} margin={{ top: 5, right: 20, bottom: 5, left: 500 }}>
                         <PolarGrid />
                         <PolarAngleAxis dataKey="name" />
                         <PolarRadiusAxis/>
                         <Radar name="State" dataKey="value" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6}/>
                     </RadarChart>
+                    </ResponsiveContainer>
                 )}
                 {! this.props.allSpendings ? null : graph(
                     <BubbleTree data={this.props.allSpendings}/>

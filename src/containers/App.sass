@@ -21,6 +21,75 @@
 
 
 
+.author
+    text-align: center
+    padding: 25px
+    background-color: #40c4ff
+    color: #fff
+    margin-top: -20px
+  
+.hero
+    color: #fafafa
+    padding-top: 190px !important
+    background: #607d8b
+    //background: linear-gradient(50deg, HSLA(205, 62%, 44%, 1), #52b07c)
+    padding-bottom: 25px
+    margin-top: -90px
+
+select
+  display: flex !important
+
+.hero .hero__title 
+    font-size: 3rem
+
+.block
+  padding-top: 30px
+.block .block__title 
+    text-align: center
+    font-weight: 300
+    padding-bottom: 30px
+
+.description
+  background-color: #66bb6a
+  color: #fff
+  padding-bottom: 20px
+
+.about
+    background-color: #40c4ff
+    color: #fafafa
+    padding-bottom: 20px
+
+.author .author__img
+    width: 150px
+    box-shadow: 0px 0px 1px 2px rgba(0, 0, 0, .3)
+
+
+.author .author__name
+    font-weight: 100
+    margin-top: 15px
+
+
+.author .author__social-media__icon
+    display: inline-flex
+    margin: 0 15px
+
+
+.author .author__social-media__icon i 
+    width: 50px
+    height: 50px
+    color: #fff
+    transition: .3s
+
+
+.author .author__social-media__icon--github:hover i
+    color: #000
+    border-radius: 50px
+
+.author .author__social-media__icon--linkedin:hover i
+    color: #4875B4
+    border-radius: 5px
+
+
 +keyframes("App-logo-spin")
   from
     transform: rotate(0deg)
@@ -29,23 +98,34 @@
 .app
   display: flex
   align-items: center
+  overflow-x: hidden
 .content
   width: 100%
   display: inline-flex
   min-height: 100vh
   height: 100%
+  padding-top: 10px
+  margin-right: 40px
 
 .sidebar
   display: none
   &--closed
-    width: 0vw
+    display: none
+    & + .content
+      margin-left: 0
   &--opened
-    display: inline-flex
-    width: 30vw
+    & + .content
+      margin-left: 20vw
+    position: fixed
+    top: 0
+    left: 0
+    bottom: 0
+    display: flex
+    width: 20vw
     box-shadow: 0 5px 5px lighten(#333, 70%)
   &-toggle
-    display: inline-flex
-    position: relative
+    display: flex
+    position: fixed
     height: 100vh
     min-height: 100vh
     //width: 5vw
