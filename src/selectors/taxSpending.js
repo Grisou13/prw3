@@ -44,12 +44,12 @@ const taxCalculationMapping = {
     // cb is how the data should be added to the total of taxes
     // data is the data from the form
     // calc is calculation data for the form key
-    cb : (data, calc) => data * getValueInRange(calc, data)// TODO get the percent from calc
+    cb : (data, calc) => getValueInRange(calc, data)// TODO get the percent from calc
   },
   income: {
     formKey:"income",
     if: () => true,
-    cb: (data, calc) => data*getValueInRange(calc, data)
+    cb: (data, calc) => getValueInRange(calc, data)
   },
   nb_children:{
     formKey:"nb_children",

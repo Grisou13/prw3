@@ -112,8 +112,8 @@ class TaxForm extends React.Component{
             {field("Email", "email")}
           </div>,
           <div  key="second-step">
-            {field("Income", "income","text", true)}
-            {field("Fortune", "fortune")}
+            {field("Income*", "income","text", true)}
+            {field("Fortune*", "fortune")}
             {field("Deductions", "deductions")}
           </div>,
           <div key="third-step">
@@ -178,7 +178,7 @@ class TaxForm extends React.Component{
     render(){
         console.log("IS FORM FINISHED?",this.props)
         return (
-            <div className={["form-container", this.state.finished ? "form-container--finished": "form-container--unfinished"].join(" ")}>
+            <div className={["form-container", this.state.finished ? "form-container--finished": "form-container--unfinished","z-depth-4"].join(" ")}>
                 <div className="form">
                     {
                     this.props.completed ?

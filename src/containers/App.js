@@ -55,7 +55,8 @@ class App extends React.Component{
         return (
             <div className="app">
                 
-                <div className="content">
+                <div className="content container">
+                <p className="text-grey">* fields are required</p>
                     <TaxForm />
                 </div>
                 
@@ -74,19 +75,24 @@ class App extends React.Component{
                     <div class="container-wide">
                         <div class="row block hero">
                             <h2>Where are my taxes?</h2>
-                            <p>Où vont mes taxes dans les caisses de l'état?</p>
+                            <p>Where does the tax money go to, to which state entity, and how much?</p>
+                            <p>This visualisations allow you to lookup all this data</p>
+                            <p>So first off, we will need to calculate your taxes, you can complete the form below and start exploring</p>
                         </div>
                         
                     </div>
                     <div class="container-wide" style={{marginTop:-35}}>
                         <div class="row block description" >
                             <h2>Data</h2>
+                            <p>All the data comes directly from the <a href="https://www.vd.ch/fileadmin/user_upload/themes/etat_droit/finances_publiques/fichiers_pdf/Brochure_Comptes_2016.pdf">swtizerland's official sites</a></p>
+                            <p>You taxes are calculated if you where in the Canton de Vaud</p>
+
                         </div>
                     </div>
-                    <div class="container">
+                    <div class="container-wide">
                             { this.props.ready ? this.app() : <Loader /> }
                     </div>
-                    <div class="container-wide">
+                    <div class="container-wide" style={{ marginTop:20 }}>
                         <div class="block author">
                             <div class=" row">
                                 <div class="col s12">

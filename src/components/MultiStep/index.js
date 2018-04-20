@@ -54,8 +54,8 @@ class MultiStep extends React.Component {
             
         </div>
         <div className="controls">
-          { this.state.currentStep > 0 ? (<button onClick={this.gotoPreviousStep}><span>Previous</span></button>) : null}
-          { this.state.currentStep === this.state.stepCount ? (<button onClick={this.onFinish}><span>See my results</span></button>) : (<button onClick={this.gotoNextStep}><span>Next</span></button>)}
+          { this.state.currentStep > 0 ? (<button className="btn" onClick={this.gotoPreviousStep}><span>Previous</span></button>) : null}
+          { this.state.currentStep === this.state.stepCount ? (<button className="btn" onClick={this.onFinish}><span>See my results</span></button>) : (<button className="btn" onClick={this.gotoNextStep}><span>Next</span></button>)}
         </div>
       </div>
     )

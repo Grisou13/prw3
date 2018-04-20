@@ -88,6 +88,7 @@ const mapStateToProps = (state) => ({
         spendings: mapToData({data:spendingsSelector(state)}),
         taxes: calculateTaxes(state) ,
         allSpendings : mapToBubbletree(taxSpendingSelector(state)),
+        totalTaxes: totalSelector(state),
         spendingsSection :mapToData({key:'mine',data:spendingsPerSection(state)}, {key:'state',data:spendingsSelector(state)}),
         percentStateSpendings : mapToData({key:'value',data: percentPerSection(state)})
 })
@@ -105,12 +106,18 @@ const graph = (children) => (
 @connect(mapStateToProps, mapDispatchToProps)
 export default class Graph extends React.Component {
     render(){
-        
+        console.log(this.props.totalTaxes)
         return (
-            <div className="graph-container">
-                <div>
-                    <h2>You owe the state {this.props.taxes} CHF in taxes</h2>
+            <div className="" style={{ width:"100%" }}>
+                <div className="row">
+                    <h2>You owe the state {this.props.taxes.toLocaleString('fr')} CHF in taxes</h2>
                 </div>
+                <div className="row" style={{ marginBottom: 50 }}>
+                    <h4>And the state spent a total of {this.props.totalTaxes.toLocaleString('fr')} CHF in tax money</h4>
+                </div>
+                <div className="row">
+                <p className="col s12">Here's a comparison between what you oew the state in taxes, vs the state's spendings</p>
+
                 {! this.props.spendingsSection ? null :  graph(
                     <ResponsiveContainer>
                     <BarChart  data={this.props.spendingsSection} margin={{ top: 5, right: 20, bottom: 5, left: 50 }}>
@@ -127,7 +134,8 @@ export default class Graph extends React.Component {
                     </BarChart>
                     </ResponsiveContainer>
                 )}
-                
+                </div>
+                <div className="row">
                 {! this.props.percentStateSpendings ? null : graph(
                     <ResponsiveContainer>
                     <RadarChart outerRadius={90} width={960} height={350} data={this.props.percentStateSpendings} margin={{ top: 5, right: 20, bottom: 5, left: 500 }}>
@@ -138,9 +146,14 @@ export default class Graph extends React.Component {
                     </RadarChart>
                     </ResponsiveContainer>
                 )}
-                {! this.props.allSpendings ? null : graph(
+                </div>
+                <div className="row">
+                    <p className="col s12">Click on the bubbles to see more details</p>
+                </div>
+                {! this.props.allSpendings ? null : 
                     <BubbleTree data={this.props.allSpendings}/>
-                )}
+                }
+                
             </div>
         );
     }
